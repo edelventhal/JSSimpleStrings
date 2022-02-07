@@ -159,17 +159,22 @@ module.exports = (stringsJsons) => {
       : substitutions);
   };
 
-  // returns the number of elements in an array key
+  const hasString = key => (key ? Boolean(getValueForKey(key, undefined, true)) : false);
+
+  // returns the number of elements in an array or object key
   const getStringCount = (key) => {
-    const val = getValueForKey(key);
-    if (val === undefined || !(Array.isArray(val))) {
+    if (!hasString(key)) {
       return -1;
     }
-
-    return val.length;
+    const val = getValueForKey(key);
+    if (Array.isArray(val)) {
+      return val.length;
+    }
+    if (typeof val === 'object') {
+      return Object.keys(val).length;
+    }
+    return 1;
   };
-
-  const hasString = key => (key ? Boolean(getValueForKey(key, undefined, true)) : false);
 
   const capitalize = (str) => {
     if (!str) {
@@ -185,30 +190,38 @@ module.exports = (stringsJsons) => {
     return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
   };
 
-  const physicalId = (str) => {
-    if (!str) {
-      return str;
-    }
-    return `{${str.toUpperCase().replace(/_/g, ' ')}}`;
-  };
-
   const findAllStringKeys = (parentKey = null) => {
     let keys = [];
+
     for (let tableIndex = 0; tableIndex < languageTables.length; tableIndex += 1) {
-      const parentObj = parentKey
-        ? getValueForKey(parentKey, tableIndex)
-        : languageTables[tableIndex];
-      if (Array.isArray(parentObj)) {
-        keys = keys.concat(parentObj);
-      } else if (typeof parentObj === 'object') {
-        keys = keys.concat(Object.keys(parentObj));
-      } else if (parentObj) {
-        keys.push(parentKey);
+      // default (root-level) search
+      if (!parentKey) {
+        const subKeys = Object.keys(languageTables[tableIndex]);
+        for (const subKey of subKeys) {
+          keys = keys.concat(findAllStringKeys(subKey));
+        }
+      } else {
+        const val = getValueForKey(parentKey, tableIndex);
+        if (Array.isArray(val)) {
+          for (let valIndex = 0; valIndex < val.length; valIndex += 1) {
+            keys = keys.concat(findAllStringKeys(`${parentKey}/${valIndex}`));
+          }
+        } else if (typeof val === 'object') {
+          if (val.name) {
+            keys.push(parentKey);
+          }
+          const subKeys = Object.keys(val);
+          for (const subKey of subKeys) {
+            keys = keys.concat(findAllStringKeys(`${parentKey}/${subKey}`));
+          }
+        } else {
+          keys.push(parentKey);
+        }
       }
     }
 
     // remove dupes
-    return [...new Set(keys)];
+    return Array.from(new Set(keys));
   };
 
   return {
@@ -217,7 +230,6 @@ module.exports = (stringsJsons) => {
     hasString,
     capitalize,
     capitalizeFirstOnly,
-    physicalId,
     findAllStringKeys,
   };
 };

@@ -1,3 +1,4 @@
 {
-  "monkey": "melón"
+  "monkey": "melón",
+  "extra": "string"
 }
