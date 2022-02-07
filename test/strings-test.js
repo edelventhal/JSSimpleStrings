@@ -2,8 +2,8 @@
 const { expect } = require('chai');
 const en = require('./en.json');
 const es = require('./es.json');
-const stringsEn = require('../strings.js')([en]);
-const stringsEs = require('../strings.js')([es, en]);
+const stringsEn = require('../index.js')([en]);
+const stringsEs = require('../index.js')([es, en]);
 
 describe('strings.js', () => {
   describe('getString() with a single file', () => {
