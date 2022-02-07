@@ -1,0 +1,58 @@
+{
+    "extends": [
+        "airbnb-base"
+    ],
+
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "mocha": true
+    },
+
+    "rules": {
+        "arrow-body-style": "off",
+
+        "arrow-parens": "off",
+
+        "function-paren-newline": "off",
+
+        "import/prefer-default-export": "off",
+
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+
+        "no-restricted-syntax": [
+            "error",
+            {
+                "selector": "ForInStatement",
+                "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+            },
+            {
+                "selector": "LabeledStatement",
+                "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+            },
+            {
+                "selector": "WithStatement",
+                "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+            }
+        ],
+
+        "no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
+        ],
+
+        "quotes": "off",
+
+        "import/extensions": [
+            "error",
+            {
+                "js": "ignorePackages",
+                "json": "ignorePackages"
+            }
+        ]
+    }
+}

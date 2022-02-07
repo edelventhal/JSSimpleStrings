@@ -1,0 +1,22 @@
+{
+  "intro":
+  {
+    "hello": "Hello, World!",
+    "bye": "Goodbye, {{0}}! I hope you enjoyed seeing {{1}}!",
+    "options":
+    {
+      "copy": "Copy",
+      "paste": "Paste"
+    }
+  },
+  "choices":
+  [
+    "Choice A",
+    "Choice B"
+  ],
+  "thing": {
+    "name": "Bob"
+  },
+  "monkey": "melon",
+  "substitution": "Wow this one {{testKey}} has a key!"
+}

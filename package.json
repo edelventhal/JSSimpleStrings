@@ -1,0 +1,25 @@
+{
+  "name": "js-simple-strings",
+  "version": "1.2.0",
+  "description": "A simple localization system for JS.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edelventhal/JSSimpleStrings.git"
+  },
+  "scripts": {
+    "lint": "eslint src/ *.js",
+    "test": "mocha test/**/*.js"
+  },
+  "author": {
+    "name": "Eli Delventhal",
+    "email": "eli.delventhal@gmail.com",
+    "url": "https://github.com/edelventhal"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "*"
+  }
+}
