@@ -36,7 +36,7 @@ module.exports = (stringsJsons) => {
     }
 
     // javascript regex magic that swaps out the substitutions properly
-    return str.replace(/\{\{(\w+)\}\}/g, (_, key) => (
+    return str.replace(/\{\{(.+)\}\}/g, (_, key) => (
       substitutions[key] !== undefined
         ? substitutions[key]
         : `ERROR-NO-SUB-${key}`
