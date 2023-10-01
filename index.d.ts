@@ -1,10 +1,20 @@
-type AnyData = string | number | boolean | null;
-type AnyDataParent = { [k: string]: AnyData } | Array<AnyData>;
+type JSONValue = 
+ | string
+ | number
+ | boolean
+ | null
+ | JSONValue[]
+ | {[key: string]: JSONValue}
+
+interface JSONObject {
+  [k: string]: JSONValue
+}
+interface JSONArray extends Array<JSONValue> {}
 
 interface StringsInterface {
   getString: (
     key: string,
-    substitutions?: AnyDataParent,
+    substitutions?: JSONObject | JSONArray,
   ) => string;
   getStringCount: (key: string) => number;
   hasString: (key: string) => boolean;
@@ -13,5 +23,4 @@ interface StringsInterface {
   findAllStringKeys: (path?: string) => Array<string>;
 }
 
-type StringsFile = { [k: string]: AnyData | AnyDataParent };
-export default function (stringsFiles: Array<StringsFile> | StringsFile): StringsInterface;
+export default function (stringsFiles: Array<JSONObject> | JSONObject): StringsInterface;
